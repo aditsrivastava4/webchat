@@ -1,0 +1,14 @@
+.chatbox {
+	border: 2px solid black;
+	padding: 5px;
+	margin-top: 10px
+}
+.msgbox {
+	border: 2px solid black;
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+.headpart {
+	text-align: center;
+}
