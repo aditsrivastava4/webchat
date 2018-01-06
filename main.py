@@ -5,6 +5,7 @@ from jinja2 import Template
 # sending back a friendly greeting.  Run this program in your terminal and
 # access the server at http://localhost:8000 in your browser.
 from os import curdir, sep
+import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import requests as rts
 from urllib.parse import unquote, parse_qs
