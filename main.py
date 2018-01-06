@@ -1,9 +1,4 @@
 from jinja2 import Template
-#!/usr/bin/env python3
-#
-# The *hello server* is an HTTP server that responds to a GET request by
-# sending back a friendly greeting.  Run this program in your terminal and
-# access the server at http://localhost:8000 in your browser.
 from os import curdir, sep
 import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -42,7 +37,7 @@ class HelloHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type',mimetype)
                 self.end_headers()
                 template = Template(f.read())
-                self.wfile.write(template.render(data='empty').encode())
+                self.wfile.write(template.render(data='Empty').encode())
                 f.close()
             return
 
@@ -55,9 +50,6 @@ class HelloHandler(BaseHTTPRequestHandler):
         params = parse_qs(body)
         a_data = params['Textarea'][0]
 
-        data_file = open('chat_data.txt','a')
-        data_file.write(a_data+'\n')
-        data_file.close()
 
         if self.path=="/":
             self.path="/index.html"
