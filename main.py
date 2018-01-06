@@ -100,7 +100,7 @@ class HelloHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-	port = 8008
+	port = int(os.environ.get('PORT', 8000))
 	server_address = ('0.0.0.0', port)  # Serve on all addresses, port 8008.
 	httpd = HTTPServer(server_address, HelloHandler)
 	print('Server runing at http://localhost:{}/'.format(port))
