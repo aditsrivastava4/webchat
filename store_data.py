@@ -82,6 +82,9 @@ def inputData(input_data):
 	db.close()
 
 def sanitizeInputData(msg):
+	"""
+	Sanitizing the MySQL Query.
+	"""
 	if ';' in msg or '--' in msg:
 		try:
 			raise InputError
