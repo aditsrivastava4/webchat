@@ -44,13 +44,11 @@ def getData():
 	except MySQLdb.ProgrammingError:
 		#if the table does not exist.
 		create_table()
-		return False
+		new_cursor.execute("SELECT * FROM CHAT")
 
 	data = new_cursor.fetchall();
-	for d in data:
-		print(d)
 	db.close()
-	return True
+	return data
 
 def inputData(input_data):
 	"""
