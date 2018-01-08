@@ -4,6 +4,7 @@
 	<title>Web Chat</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="refresh" content="5">
 	<link rel="stylesheet" type="text/css" href="sheet.css">
 </head>
 <body>
@@ -18,7 +19,20 @@
 			</form>
 		</div>
 		<div class="chatbox">
-			{{ data }}
+			<ul>
+				{% if not (data == 'Empty') %}
+					{% for d in data%}
+						<li>
+							<span id="inline">{{ d[0] }}</span>
+						 	<span id="time">{{ d[1] }}</span>
+						</li>
+					{% endfor %}
+				{% else %}
+					<li>
+						<span id="inline">{{ data }}</span>
+					</li>
+				{% endif %}
+			</ul>
 		</div>
 	</main>
 </body>
