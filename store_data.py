@@ -2,24 +2,6 @@ import MySQLdb
 import sys
 from datetime import datetime
 
-def main():
-	newDB_flag = False
-
-	#this try check if the Database exist or not
-	try:	
-		# Open database connection
-		db = MySQLdb.connect("localhost","root","adit","ChatDB")
-	except MySQLdb.OperationalError:
-		#Create the new Database 'ChatDB'.
-		createDB()
-		newDB_flag = True
-
-	try:
-		#Get all the data from the Database
-		getData()
-	except MySQLdb.ProgrammingError:
-		#Creating the new table 'CHAT' in 'ChatDB'
-		create_table()
 	
 
 def createDB():
@@ -33,6 +15,7 @@ def createDB():
 	new_cursor.execute("CREATE DATABASE ChatDB")
 	#new_cursor.execute("CREATE TABLE CHAT(msg TEXT,ctime time)")
 	db.close()
+	create_table()
 
 
 def create_table():
@@ -53,12 +36,21 @@ def getData():
 	db = MySQLdb.connect("localhost","root","adit","ChatDB")
 	# prepare a cursor object using cursor() method
 	new_cursor = db.cursor()
-	# execute SQL query using execute() method.
-	new_cursor.execute("SELECT * FROM CHAT")
+	
+
+	try:
+		# execute SQL query using execute() method.
+		new_cursor.execute("SELECT * FROM CHAT")
+	except MySQLdb.ProgrammingError:
+		#if the table does not exist.
+		create_table()
+		return False
+
 	data = new_cursor.fetchall();
 	for d in data:
 		print(d)
 	db.close()
+	return True
 
 def inputData(input_data):
 	"""
@@ -76,10 +68,15 @@ def inputData(input_data):
 	if (not sanitizeInputData(input_data)):
 		return "Wrong Input"
 
-
-	new_cursor.execute(query.format(msg = input_data,t = ctime))
+	try:
+		new_cursor.execute(query.format(msg = input_data,t = ctime))
+	except MySQLdb.ProgrammingError:
+		#if the table does not exist.
+		create_table()
+		return False
 	db.commit()
 	db.close()
+	return True
 
 def sanitizeInputData(msg):
 	"""
@@ -92,5 +89,12 @@ def sanitizeInputData(msg):
 			print('Give proper input')
 	return True
 
-if __name__ == '__main__':
-	main()
+
+#this try check if the Database exist or not
+try:	
+	# Open database connection
+	db = MySQLdb.connect("localhost","root","adit","ChatDB")
+	db.close()
+except MySQLdb.OperationalError:
+	#Create the new Database 'ChatDB'.
+	createDB()
