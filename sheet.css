@@ -12,3 +12,10 @@
 .headpart {
 	text-align: center;
 }
+#inline {
+	font-size: 2em;
+}
+#time {
+	font-size: 0.5em;
+	float: right;
+}
