@@ -22,7 +22,7 @@ def create_table():
 	"""
 	It will create the the new table 'CHAT' in the 'ChatDB'.
 	"""
-	db = MySQLdb.connect("localhost","root","adit","ChatDB")
+	db = checkDB()
 	# prepare a cursor object using cursor() method
 	new_cursor = db.cursor()
 	# execute SQL query using execute() method.
@@ -33,7 +33,7 @@ def getData():
 	"""
 	It will get all the data from 'ChatDB'.
 	"""
-	db = MySQLdb.connect("localhost","root","adit","ChatDB")
+	db = checkDB()
 	# prepare a cursor object using cursor() method
 	new_cursor = db.cursor()
 	
@@ -56,7 +56,7 @@ def inputData(input_data):
 	"""
 	if input_data=='':
 		return
-	db = MySQLdb.connect("localhost","root","adit","ChatDB")
+	db = checkDB()
 	# prepare a cursor object using cursor() method
 	new_cursor = db.cursor()
 	# execute SQL query using execute() method.
@@ -87,6 +87,14 @@ def sanitizeInputData(msg):
 			print('Give proper input')
 	return True
 
+def checkDB():
+	database = None
+	try:
+		database = MySQLdb.connect("localhost","root","adit","ChatDB")
+	except:
+		createDB()
+		database = MySQLdb.connect("localhost","root","adit","ChatDB")
+	return database
 
 #this try check if the Database exist or not
 try:	
