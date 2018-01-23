@@ -108,6 +108,10 @@ class ChatHandler(BaseHTTPRequestHandler):
         except IOError:
             self.send_error(404,'File Not Found: %s' % self.path)
 
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header('Content-type','text/html; charset=utf-8')
+        self.end_headers()
 
 
 
