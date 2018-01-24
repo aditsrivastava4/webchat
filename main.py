@@ -4,9 +4,9 @@ import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import requests as rts
 from urllib.parse import unquote, parse_qs
-import store_data as sd
 import threading
 from socketserver import ThreadingMixIn
+import storeMsg
 
 
 class ThreadHTTPServer(ThreadingMixIn, HTTPServer):
@@ -39,7 +39,7 @@ class ChatHandler(BaseHTTPRequestHandler):
 
             if sendReply == True:
                 #Open the static file requested and send it
-                msgData = sd.getData()
+                msgData = storeMsg.getData()
                 if(msgData == ()):
                 	msgData = 'Empty'
 
@@ -62,8 +62,7 @@ class ChatHandler(BaseHTTPRequestHandler):
         body = self.rfile.read(length).decode()
         params = parse_qs(body)
         a_data = params['Textarea'][0]
-        if(not sd.inputData(a_data)):
-        	sd.inputData(a_data)
+        storeMsg.inputData(a_data)
 
         if self.path=="/":
             self.path="/index.html"
@@ -90,7 +89,7 @@ class ChatHandler(BaseHTTPRequestHandler):
 
             if sendReply == True:
                 #Open the static file requested and send it
-                msgData = sd.getData()
+                msgData = storeMsg.getData()
                 if(msgData == ()):
                 	msgData = 'Empty'
 
