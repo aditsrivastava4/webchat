@@ -94,13 +94,17 @@ class ChatHandler(BaseHTTPRequestHandler):
                 	msgData = 'Empty'
 
 
-                f = open(curdir + sep + self.path) 
+                '''f = open(curdir + sep + self.path) 
                 self.send_response(200)
                 self.send_header('Content-type',mimetype)
                 self.end_headers()
                 template = Template(f.read())
                 self.wfile.write(template.render(data=msgData).encode())
-                f.close()
+                f.close()'''
+                self.send_response(302)
+                self.path = "/"
+                self.send_header('Location', self.path)
+                self.end_headers()
             return
 
 
