@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def connectDB(query,setectQ=0):
-	'''parse.uses_netloc.append("postgres")
+	parse.uses_netloc.append("postgres")
 	url = parse.urlparse(os.environ["DATABASE_URL"])
 
 	conn = psycopg2.connect(
@@ -14,12 +14,12 @@ def connectDB(query,setectQ=0):
 	    password=url.password,
 	    host=url.hostname,
 	    port=url.port
-	)'''
-	conn = psycopg2.connect(
+	)
+	'''conn = psycopg2.connect(
 		database='webchatDB',
 		user='adit',
 		password='adit'
-	)
+	)'''
 	conn.autocommit = True
 	cur = conn.cursor()
 	cur.execute(query)
