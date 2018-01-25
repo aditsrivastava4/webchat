@@ -21,10 +21,11 @@
 		<div class="chatbox">
 			<ul>
 				{% if not (data == 'Empty') %}
-					{% for d in data%}
+					{% set l = (data|length)-1 %}
+					{% for d in range(l,-1,-1)%}
 						<li>
-							<span id="inline">{{ d[0] }}</span>
-						 	<span id="time">{{ d[1] }}</span>
+							<span id="inline">{{ data[d][0] }}</span>
+						 	<span id="time">{{ data[d][1] }}</span>
 						</li>
 					{% endfor %}
 				{% else %}
