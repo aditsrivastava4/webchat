@@ -80,3 +80,12 @@ def inputData(input_data):
 			connectDB(query.format(msg = input_data,t = ctime))
 	return True
 
+def dropTable():
+	"""
+	This function will drop the table when called
+	"""
+	query = """drop table CHAT"""
+	try:
+		connectDB(query)
+	except:
+		return
