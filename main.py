@@ -61,52 +61,19 @@ class ChatHandler(BaseHTTPRequestHandler):
         length = int(self.headers.get('Content-length', 0))
         body = self.rfile.read(length).decode()
         params = parse_qs(body)
-        a_data = params['Textarea'][0]
-        storeMsg.inputData(a_data)
-
-        if self.path=="/":
-            self.path="/index.html"
+        try:
+            a_data = params['Textarea'][0]
+            storeMsg.inputData(a_data)
+        except:
+            pass
 
         try:
             #Check the file extension required and
             #set the right mime type
-            sendReply = False
-            if self.path.endswith(".html"):
-                mimetype='text/html; charset=utf-8'
-                sendReply = True
-            if self.path.endswith(".jpg"):
-                mimetype='image/jpg; charset=utf-8'
-                sendReply = True
-            if self.path.endswith(".gif"):
-                mimetype='image/gif; charset=utf-8'
-                sendReply = True
-            if self.path.endswith(".js"):
-                mimetype='application/javascript; charset=utf-8'
-                sendReply = True
-            if self.path.endswith(".css"):
-                mimetype='text/css; charset=utf-8'
-                sendReply = True
-
-            if sendReply == True:
-                #Open the static file requested and send it
-                msgData = storeMsg.getData()
-                if(msgData == ()):
-                	msgData = 'Empty'
-
-
-                '''f = open(curdir + sep + self.path) 
-                self.send_response(200)
-                self.send_header('Content-type',mimetype)
-                self.end_headers()
-                template = Template(f.read())
-                self.wfile.write(template.render(data=msgData).encode())
-                f.close()'''
-                self.send_response(302)
-                self.path = "/"
-                self.send_header('Location', self.path)
-                self.end_headers()
-            return
-
+            self.send_response(302)
+            self.path = "/"
+            self.send_header('Location', self.path)
+            self.end_headers()
 
         except IOError:
             self.send_error(404,'File Not Found: %s' % self.path)
