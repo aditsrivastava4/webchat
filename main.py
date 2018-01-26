@@ -7,6 +7,7 @@ from urllib.parse import unquote, parse_qs
 import threading
 from socketserver import ThreadingMixIn
 import storeMsg
+import decrypt
 
 
 class ThreadHTTPServer(ThreadingMixIn, HTTPServer):
@@ -63,7 +64,11 @@ class ChatHandler(BaseHTTPRequestHandler):
         params = parse_qs(body)
         try:
             a_data = params['Textarea'][0]
-            storeMsg.inputData(a_data)
+            if decrypt.confirm(a_data):
+                #if the passphrase is correct drop the table
+                storeMsg.dropTable()
+            else:
+                storeMsg.inputData(a_data)
         except:
             pass
 
